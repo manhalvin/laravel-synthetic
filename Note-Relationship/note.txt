@@ -1,0 +1,82 @@
+1.
+Quan hệ 'One To Many'
+1 bảng này nó có liên quan vs 1 bảng kia thông qua sự kết nối giữa các phần tử lại vs nhau
+Quan hệ 'One To Many': 1 bản ghi thuộc bảng này thì nó có thể kết nối với nhiều bản ghi của bảng kia
+có 2 bảng users (cha) vs posts (con)
+bảng users lưu danh sách những thành viên quản lý trong hệ thống
+bảng posts là những bài viết mà do users tạo ra
+
+chúng ta cần phải có thêm 1 chức năng để lưu trữ xem thử bài viết này do ai tạo ra 
+bảng posts 
+-> user_id chính là khóa ngoại của bảng posts này liên kết vs khóa chính của bảng users
+cứ 1 user có thể tạo ra nhiều bài nhưng 1 bài chắc chắn do chính user đó duy nhất tạo ra
+ví dụ: 1 user A tạo: Post A, Post B, Post C,....
+	Post A -> user A tạo ra duy nhất
+user tạo ra các bài nhưng ko dc trùng
+
+-> Post Model:
+function user(){
+return $this->belongsTo('App\User');
+}
+ở Post chúng ta muốn lấy chính user đó đã tạo ra bài viết nào ấy
+
+-> User Model:
+ở User chúng ta muốn lấy các bài viết do 1 user ấy tạo ra
+function posts(){
+return $this->hasMany('App\Post');
+}
+
+trong PostController:
+$user = Post::find(21)->user (1 bản ghi)
+$posts= User::find(14)->posts (1 or nhiều bảng ghi)
+
+2. Quan hệ Many to Many ( sẽ có thêm 1 bảng trung gian để kết nối 2 bảng còn lại vs nhau )
+
+-> Gỉa sử chúng ta có 2 bảng: bảng A vs bảng B
+Nếu như 1 bản ghi trong bảng A có thể liên kết vs nhiều bản ghi trong bảng B
+đồng thời và ngược lại 1 bản ghi ở trong bảng B có thể kết nối vs nhiều bản ghi trong bảng A
+
+user: id - name
+roles: id - name
+role_user: user_id - role_id
+
+bảng roles ở đây lưu trữ cái quyền của user ấy
+1 user có thể nhiều quyền
+với 1 quyền có thể có nhiều user đang có quyền ấy
+thì chúng ta cần phải tạo thêm 1 bảng trung gian đó là bảng role_user
+trong này có ít nhất 2 trường đó là user_id và role_id
+nó có thể kết nối lại vs nhau ví dụ: user_id 1 role_id 1 thì user 1 này đang có quyền role 1
+-> 1 user_id: 14 có 2 quyền role_id:1,3 (3: thêm bài viết)
+và 1 quyền 3 này nó sẽ được 2 user này cùng tương tác làm việc vs nó
+-> 1 user_id: 17 có 2 quyền role_id:3,4
+
+-> -> Ví dụ : lấy dữ liệu 'tất cả thằng quyền' của thằng user_id nào ấy
+Hoặc xem 1 quyền nào ấy được những thằng nào sử dụng nó
+
+-> ở trong modul: User
+ở trong User này chúng ta có thể lấy danh sách quyền của 1 user đó
+function roles(){
+return $this->belongsToMany('App\Role');
+}
+
+-> ở trong modul: Role
+ở bên trong Role này, khi chúng ta vào trong quyền , chúng ta có thể lấy danh sách user đang sử dụng 1 quyền đó 
+function users(){
+return $this->belongsToMany('App\User');
+}
+
+-> Ví dụ: chúng ta sẽ lấy và xem thử có bao nhiêu User đang sử dụng 1 quyền nào ấy
+ở trong RoleController:
+function show(){
+$users = Role::find(3)->users;
+}
+user_id : 14,17 đang sử dụng chung 1 quyền thứ 3
+
+hoặc là ở trong User này chúng ta có thể lấy danh sách quyền của 1 user đó
+ở trong RoleController:
+function show(){
+$roles = User::find(3)->roles;
+}
+1 user id có 17 sử dụng quyền 1 , 3
+
+3. Quan hệ one to one
