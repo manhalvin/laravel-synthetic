@@ -16,13 +16,13 @@
                     @endif
                     <h1>Giỏ hàng</h1>
                     <p>
-                        Hiện tại có {{ Cart::count() }} sản phẩm trong giỏ hàng
+
                     </p>
                     <div class='category-product-list'>
 
                     </div>
-                    <input class="btn btn-primary changeQuantity" type="submit" value="Cập nhật giỏ hàng">
-                    <button type="button" class="btn btn-default delete_cart">Xóa giỏ hàng</button>
+                    {{-- <input class="btn btn-primary changeQuantity" type="submit" value="Cập nhật giỏ hàng"> --}}
+                    <button type="button" class="btn btn-primary delete_cart">Xóa giỏ hàng</button>
 
 
                 </form> <br>
@@ -32,7 +32,7 @@
             @csrf
             <input type="text" name="coupon" id="" class="fom-control" placeholder="Nhập mã giảm giá"> <br>
             <br>
-            <input type="submit" value="Tính giá giảm giá" name='check_coupon' class='check_coupon'> <br>
+            <input type="submit" value="Tính giá giảm giá" name='check_coupon' class='btn btn-success check_coupon'> <br>
         </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"
@@ -96,6 +96,12 @@
                     method: 'DELETE',
                     success: function(data) {
                         load_data();
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Xóa giỏ hàng thành công',
+                            icon: 'success',
+                            confirmBbuttonText: 'Cool'
+                        })
                     }
 
                 });

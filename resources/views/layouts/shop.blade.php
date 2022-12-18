@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-3 mt-4 mb-4">
                         <a class="btn btn-primary " href="{{ route('demo.product.show') }}" role="button">Trang chủ</a>
-                        <a class="btn btn-primary" href="{{ route('demo.cart.show') }}" role="button">Giỏ hàng<span class="text-white">({{ Cart::count() }})</span></a>
+                        <a class="btn btn-primary" href="{{ route('demo.cart.show') }}" role="button">Giỏ hàng<span class="text-white"></span></a>
                     </div>
                 </div>
             </div>

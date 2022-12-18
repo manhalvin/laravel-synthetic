@@ -51,7 +51,7 @@
                                             <a href="{{ route('demo.product.detail', $product->product_id) }}"
                                                 class="btn btn-outline-danger btn-sm mt-3" class="">Detail</a>
                                             <br>
-                                            <button type="button" class="btn btn-default add-to-cart"
+                                            <button type="button" class="btn btn-primary btn-sm m-2 add-to-cart"
                                                 data-id_product="{{ $product->product_id }}" name="add-to-cart">Thêm giỏ
                                                 hàng</button>
                                         </div>
@@ -99,11 +99,12 @@
                             icon: 'success',
                             confirmBbuttonText: 'Cool'
                         })
+                        window.location.href = 'https://quocmanh.com/Laravel-8/demo/cart/show';
                     }
 
                 });
             });
         });
     </script>
-   
+
 @endsection

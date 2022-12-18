@@ -56,13 +56,13 @@
                         </p>
                     </td>
                     <td class="cart_delete">
-                        <button type="button" class="btn btn-default cart_quantity_delete"
+                        <button type="button" class="btn btn btn-primary cart_quantity_delete"
                             data-id_product="{{ $cart['session_id'] }}" name="cart_quantity_delete">Xóa</button>
                     </td>
                 </tr>
             @endforeach
                 <tr>
-                    <td colspan='6' class="text-right">Tổng:</td>
+                    <td colspan='6' class="text-right">Tổng ban đầu:</td>
                     <td><strong>{{ number_format($total, 0, ',', '.') }}đ</strong></td>
 
                 </tr>
@@ -79,7 +79,7 @@
                                         @endphp
                                     </p>
                                     <p>
-                                        Tổng đã giảm: {{ number_format($total-$totalCoupon, 0, ',', '.') }}đ
+                                        <b>Tổng đã giảm: {{ number_format($total-$totalCoupon, 0, ',', '.') }}đ</b>
                                     </p>
                                 @elseif ($v['cordite'] == 2)
                                 Mã giảm: {{ number_format($v['number'], 0, ',', '.') }}đ
@@ -89,7 +89,8 @@
                                     @endphp
                                 </p>
                                 <p>
-                                    Tổng đã giảm: {{ number_format($totalCoupon, 0, ',', '.') }}đ
+
+                                    <b> Tổng đã giảm: {{ number_format($totalCoupon, 0, ',', '.') }}đ</b>
                                 </p>
                                 @endif
                             @endforeach
@@ -130,7 +131,7 @@
                     load_data();
                     Swal.fire({
                         title: 'Success',
-                        text: 'Xóa sản phẩm vào giỏ hàng thành công',
+                        text: 'Xóa sản phẩm trong giỏ hàng thành công',
                         icon: 'success',
                         confirmBbuttonText: 'Cool'
                     })
